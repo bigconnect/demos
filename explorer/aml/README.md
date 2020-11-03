@@ -6,20 +6,20 @@ where we try to identify some Fraud Rings using graph technology.
 Included are data files (csv format) for People, Companies, Addresses, Bank Accounts, Shares of company stock, and financial Transactions.
 
 ## Loading the data
-Clone the repository, open Cypher Lab and type in the following Cypher queries to load the data:
+Open Cypher Lab and type in the following Cypher queries to load the data:
 
 1. Load Bank Accounts:
 
-        WITH 'file:///<path_to_demos_folder>/explorer/aml/bank_accounts.csv' AS url
-        LOAD CSV WITH HEADERS FROM url AS row
+        USING PERIODIC COMMIT 30000
+        LOAD CSV WITH HEADERS FROM 'https://github.com/bigconnect/demos/raw/master/explorer/aml/bank_accounts.csv' AS row
         WITH row
         CREATE (a:bankAccount) 
         SET a.number = row.number, a.balance = toFloat(row.total)
 
 2. Load and link Transactions to their Bank Accounts (takes a while):
 
-        USING PERIODIC COMMIT 1000
-        LOAD CSV WITH HEADERS FROM 'file:///<path_to_demos_folder>/explorer/aml/transactions.csv' AS row
+        USING PERIODIC COMMIT 30000
+        LOAD CSV WITH HEADERS FROM 'https://github.com/bigconnect/demos/raw/master/explorer/aml/transactions.csv' AS row
         WITH row
         MATCH (b1:bankAccount { number: row.account1 })
         MATCH (b2:bankAccount { number: row.account2 })
@@ -28,32 +28,32 @@ Clone the repository, open Cypher Lab and type in the following Cypher queries t
 
 3. Load Addresses:
 
-        WITH 'file:///<path_to_demos_folder>/explorer/aml/addresses.csv' AS url
-        LOAD CSV WITH HEADERS FROM url AS row
+        USING PERIODIC COMMIT 30000
+        LOAD CSV WITH HEADERS FROM 'https://github.com/bigconnect/demos/raw/master/explorer/aml/addresses.csv' AS row
         WITH row
         CREATE (a:address) 
         SET a.eid = row.id, a.city = row.city, a.country = row.country, a.geoLocation = toGeoPoint(row.lat+','+row.long), a.zipCode = row.zip_code, a.street = row.street
 
 4. Load Companies:
 
-        WITH 'file:///<path_to_demos_folder>/explorer/aml/companies.csv' AS url
-        LOAD CSV WITH HEADERS FROM url AS row
+        USING PERIODIC COMMIT 30000
+        LOAD CSV WITH HEADERS FROM 'https://github.com/bigconnect/demos/raw/master/explorer/aml/companies.csv' AS row
         WITH row
         CREATE (a:organization) 
         SET a.eid = row.id, a.name = row.name, a.description = row.description
 
 5. Load Persons:
 
-        WITH 'file:///<path_to_demos_folder>/explorer/aml/people.csv' AS url
-        LOAD CSV WITH HEADERS FROM url AS row
+        USING PERIODIC COMMIT 30000
+        LOAD CSV WITH HEADERS FROM 'https://github.com/bigconnect/demos/raw/master/explorer/aml/people.csv' AS row
         WITH row
         CREATE (a:person) 
         SET a.eid = row.id, a.firstName = row.first_name, a.lastName = row.last_name, a.email = row.email, a.country = row.country
 
 6. Load and link Companies with their Addresses:
 
-        WITH 'file:///<path_to_demos_folder>/explorer/aml/companies_addresses.csv' AS url
-        LOAD CSV WITH HEADERS FROM url AS row
+        USING PERIODIC COMMIT 30000
+        LOAD CSV WITH HEADERS FROM 'https://github.com/bigconnect/demos/raw/master/explorer/aml/companies_addresses.csv' AS row
         WITH row
         MATCH (c:organization { eid: row.company })
         MATCH (a:address { eid: row.address })
@@ -61,8 +61,8 @@ Clone the repository, open Cypher Lab and type in the following Cypher queries t
         
 7. Load and link People with their Addresses:
 
-        WITH 'file:///<path_to_demos_folder>/explorer/aml/people_addresses.csv' AS url
-        LOAD CSV WITH HEADERS FROM url AS row
+        USING PERIODIC COMMIT 30000
+        LOAD CSV WITH HEADERS FROM 'https://github.com/bigconnect/demos/raw/master/explorer/aml/people_addresses.csv' AS row
         WITH row
         MATCH (c:person { eid: row.person })
         MATCH (a:address { eid: row.address })
@@ -70,8 +70,8 @@ Clone the repository, open Cypher Lab and type in the following Cypher queries t
         
 8. Load and link Companies with their Bank Accounts:
 
-        WITH 'file:///<path_to_demos_folder>/explorer/aml/companies_accounts.csv' AS url
-        LOAD CSV WITH HEADERS FROM url AS row
+        USING PERIODIC COMMIT 30000
+        LOAD CSV WITH HEADERS FROM 'https://github.com/bigconnect/demos/raw/master/explorer/aml/companies_accounts.csv' AS row
         WITH row
         MATCH (c:organization { eid: row.company })
         MATCH (b:bankAccount { number: row.account })
@@ -79,8 +79,8 @@ Clone the repository, open Cypher Lab and type in the following Cypher queries t
 
 9. Load and link Persons with their Bank Accounts:
 
-        WITH 'file:///<path_to_demos_folder>/explorer/aml/people_accounts.csv' AS url
-        LOAD CSV WITH HEADERS FROM url AS row
+        USING PERIODIC COMMIT 30000
+        LOAD CSV WITH HEADERS FROM 'https://github.com/bigconnect/demos/raw/master/explorer/aml/people_accounts.csv' AS row
         WITH row
         MATCH (c:person { eid: row.person })
         MATCH (b:bankAccount { number: row.account })
@@ -88,8 +88,8 @@ Clone the repository, open Cypher Lab and type in the following Cypher queries t
 
 10. Load and link Companies with other Companies:
 
-        WITH 'file:///<path_to_demos_folder>/explorer/aml/companies_shares.csv' AS url
-        LOAD CSV WITH HEADERS FROM url AS row
+        USING PERIODIC COMMIT 30000
+        LOAD CSV WITH HEADERS FROM 'https://github.com/bigconnect/demos/raw/master/explorer/aml/companies_shares.csv' AS row
         WITH row
         MATCH (c1:organization { eid: row.company1 })
         MATCH (c2:organization { eid: row.company2 })
@@ -97,8 +97,8 @@ Clone the repository, open Cypher Lab and type in the following Cypher queries t
 
 11. Load and link Persons with Companies:
 
-        WITH 'file:///<path_to_demos_folder>/explorer/aml/people_shares.csv' AS url
-        LOAD CSV WITH HEADERS FROM url AS row
+        USING PERIODIC COMMIT 30000
+        LOAD CSV WITH HEADERS FROM 'https://github.com/bigconnect/demos/raw/master/explorer/aml/people_shares.csv' AS row
         WITH row
         MATCH (p:person { eid: row.person })
         MATCH (c:organization { eid: row.company })
