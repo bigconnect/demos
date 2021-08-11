@@ -16,13 +16,15 @@ Open Cypher Lab and type in the following Cypher queries to load the data:
         CREATE (b1:bankAccount { number: row.account1 })-[:originated]->(tx:transaction)-[:beneficiary]->(b2:BankAccount { number: row.account2 })
         SET tx.amount = toFloat(row.amount), tx.date = date(row.tx_date), tx.txid = row.tx_id
         
-2. Update Bank Account balances:
+2. Load transactions and link them to Bank Accounts (takes a while)::
 
         USING PERIODIC COMMIT 1000
-        LOAD CSV WITH HEADERS FROM 'https://github.com/bigconnect/demos/raw/master/explorer/aml/bank_accounts.csv' AS row
+        LOAD CSV WITH HEADERS FROM 'https://github.com/bigconnect/demos/raw/master/explorer/aml/transactions.csv' AS row
         WITH row
-        MATCH (a:bankAccount {number: row.number}) 
-        SET a.number = row.number, a.balance = toFloat(row.total)
+        MATCH (b1:bankAccount { number: row.account1 })
+        MATCH (b2:bankAccount { number: row.account2 })
+        CREATE (b1)-[:originated]->(tx:transaction)-[:beneficiary]->(b2)
+        SET tx.amount = toFloat(row.amount), tx.date = date(row.tx_date), tx.txid = row.tx_id
 
 3. Load Addresses:
 
