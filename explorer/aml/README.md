@@ -118,8 +118,8 @@ Open Cypher Lab and type in the following Cypher queries to load the data:
 
         MATCH(p1:person)-[:hasAffiliation*]-(t1)-[:hasBankAccount]->(a1)-[:originated]->(tx)-[:beneficiary]-(a2)-[:hasBankAccount]-(t2)-[:hasAffiliation*]-(p2:person) 
         WHERE id(p1) < id(p2) 
-        WHERE p1, p2, COUNT(*) as paths, SUM(tx.amount) as total
+        WITH p1, p2, COUNT(*) as paths, SUM(tx.amount) as total
         RETURN p1.firstName+' '+p1.lastName as Person1, p2.firstName+' '+p2.lastName as Person2, total*paths*paths as FraudScore
-        ORDER BY score DESC
+        ORDER BY FraudScore DESC
         LIMIT 10
         
