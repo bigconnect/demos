@@ -10,7 +10,7 @@ Open Cypher Lab and type in the following Cypher queries to load the data:
 
 1. Load transactions and their Bank Accounts (takes a while):
 
-        USING PERIODIC COMMIT 30000
+        USING PERIODIC COMMIT 1000
         LOAD CSV WITH HEADERS FROM 'https://github.com/bigconnect/demos/raw/master/explorer/aml/transactions.csv' AS row
         WITH row
         CREATE (b1:bankAccount { number: row.account1 })-[:originated]->(tx:transaction)-[:beneficiary]->(b2:BankAccount { number: row.account2 })
@@ -18,7 +18,7 @@ Open Cypher Lab and type in the following Cypher queries to load the data:
         
 2. Update Bank Account balances:
 
-        USING PERIODIC COMMIT 30000
+        USING PERIODIC COMMIT 1000
         LOAD CSV WITH HEADERS FROM 'https://github.com/bigconnect/demos/raw/master/explorer/aml/bank_accounts.csv' AS row
         WITH row
         MATCH (a:bankAccount {number: row.number}) 
@@ -26,7 +26,7 @@ Open Cypher Lab and type in the following Cypher queries to load the data:
 
 3. Load Addresses:
 
-        USING PERIODIC COMMIT 30000
+        USING PERIODIC COMMIT 1000
         LOAD CSV WITH HEADERS FROM 'https://github.com/bigconnect/demos/raw/master/explorer/aml/addresses.csv' AS row
         WITH row
         CREATE (a:address) 
@@ -34,7 +34,7 @@ Open Cypher Lab and type in the following Cypher queries to load the data:
 
 4. Load Companies:
 
-        USING PERIODIC COMMIT 30000
+        USING PERIODIC COMMIT 1000
         LOAD CSV WITH HEADERS FROM 'https://github.com/bigconnect/demos/raw/master/explorer/aml/companies.csv' AS row
         WITH row
         CREATE (a:organization) 
@@ -42,7 +42,7 @@ Open Cypher Lab and type in the following Cypher queries to load the data:
 
 5. Load Persons:
 
-        USING PERIODIC COMMIT 30000
+        USING PERIODIC COMMIT 1000
         LOAD CSV WITH HEADERS FROM 'https://github.com/bigconnect/demos/raw/master/explorer/aml/people.csv' AS row
         WITH row
         CREATE (a:person) 
@@ -50,7 +50,7 @@ Open Cypher Lab and type in the following Cypher queries to load the data:
 
 6. Load and link Companies with their Addresses:
 
-        USING PERIODIC COMMIT 30000
+        USING PERIODIC COMMIT 1000
         LOAD CSV WITH HEADERS FROM 'https://github.com/bigconnect/demos/raw/master/explorer/aml/companies_addresses.csv' AS row
         WITH row
         MATCH (c:organization { eid: row.company })
@@ -59,7 +59,7 @@ Open Cypher Lab and type in the following Cypher queries to load the data:
         
 7. Load and link People with their Addresses:
 
-        USING PERIODIC COMMIT 30000
+        USING PERIODIC COMMIT 1000
         LOAD CSV WITH HEADERS FROM 'https://github.com/bigconnect/demos/raw/master/explorer/aml/people_addresses.csv' AS row
         WITH row
         MATCH (c:person { eid: row.person })
@@ -68,7 +68,7 @@ Open Cypher Lab and type in the following Cypher queries to load the data:
         
 8. Load and link Companies with their Bank Accounts:
 
-        USING PERIODIC COMMIT 30000
+        USING PERIODIC COMMIT 1000
         LOAD CSV WITH HEADERS FROM 'https://github.com/bigconnect/demos/raw/master/explorer/aml/companies_accounts.csv' AS row
         WITH row
         MATCH (c:organization { eid: row.company })
@@ -77,7 +77,7 @@ Open Cypher Lab and type in the following Cypher queries to load the data:
 
 9. Load and link Persons with their Bank Accounts:
 
-        USING PERIODIC COMMIT 30000
+        USING PERIODIC COMMIT 1000
         LOAD CSV WITH HEADERS FROM 'https://github.com/bigconnect/demos/raw/master/explorer/aml/people_accounts.csv' AS row
         WITH row
         MATCH (c:person { eid: row.person })
@@ -86,7 +86,7 @@ Open Cypher Lab and type in the following Cypher queries to load the data:
 
 10. Load and link Companies with other Companies:
 
-        USING PERIODIC COMMIT 30000
+        USING PERIODIC COMMIT 1000
         LOAD CSV WITH HEADERS FROM 'https://github.com/bigconnect/demos/raw/master/explorer/aml/companies_shares.csv' AS row
         WITH row
         MATCH (c1:organization { eid: row.company1 })
@@ -95,7 +95,7 @@ Open Cypher Lab and type in the following Cypher queries to load the data:
 
 11. Load and link Persons with Companies:
 
-        USING PERIODIC COMMIT 30000
+        USING PERIODIC COMMIT 1000
         LOAD CSV WITH HEADERS FROM 'https://github.com/bigconnect/demos/raw/master/explorer/aml/people_shares.csv' AS row
         WITH row
         MATCH (p:person { eid: row.person })
