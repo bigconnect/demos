@@ -13,7 +13,7 @@ Open Cypher Lab and type in the following Cypher queries to load the data:
         USING PERIODIC COMMIT 1000
         LOAD CSV WITH HEADERS FROM 'https://github.com/bigconnect/demos/raw/master/explorer/aml/transactions.csv' AS row
         WITH row
-        CREATE (b1:bankAccount { number: row.account1 })-[:originated]->(tx:transaction)-[:beneficiary]->(b2:BankAccount { number: row.account2 })
+        CREATE (b1:bankAccount { number: row.account1 })-[:originated]->(tx:transaction)-[:beneficiary]->(b2:bankAccount { number: row.account2 })
         SET tx.amount = toFloat(row.amount), tx.date = date(row.tx_date), tx.txid = row.tx_id
         
 2. Load transactions and link them to Bank Accounts (takes a while)::
